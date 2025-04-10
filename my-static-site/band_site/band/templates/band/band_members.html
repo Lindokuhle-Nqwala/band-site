@@ -1,0 +1,19 @@
+{% load static %}
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <link rel="stylesheet" href="{% static 'styles.css' %}">
+     <title>Meet the Band</title>
+ </head>
+ <body>
+     <h1>Meet the Band</h1>
+     <p>Our band consists of amazing musicians who rock the stage!</p>
+     <ul>
+        <li>🎸 Alex - Guitar</li>
+        <li>🥁 Jamie - Drums</li>
+        <li>🎤 Taylor - Vocals</li>
+    </ul>
+     <a href="{% url 'home' %}">Back to Home</a>
+ </body>
+ </html>
