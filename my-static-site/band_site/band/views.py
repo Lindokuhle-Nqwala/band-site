@@ -1,54 +1,67 @@
-from django.shortcuts import render
-from .models import Concert
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login
+from .models import BandMember, Concert
+from .forms import RegisterForm
 
-
-
-# Create your views here.
 def home(request):
+    """
+    Display the home page of the band site.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: Rendered home page.
+    """
     return render(request, 'band/home.html')
 
-def concerts(request):
-    concerts = Concert.objects.all()
-    return render(request, 'band/concerts.html', {'concerts': concerts})
-
 def band_members(request):
-    return render(request, 'band/band_members.html')
+    """
+    Retrieve and display a list of all band members.
 
+    Args:
+        request (HttpRequest): The HTTP request object.
 
-@login_required
+    Returns:
+        HttpResponse: Rendered template showing band members.
+    """
+    members = BandMember.objects.all()
+    context = {'members': members}
+    return render(request, 'band/band_members.html', context)
+
 def concerts(request):
-    concerts = Concert.objects.all()
-    return render(request, 'band/concerts.html', {'concerts': concerts})
+    """
+    Retrieve and display upcoming concerts.
 
-from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login
+    Args:
+        request (HttpRequest): The HTTP request object.
 
-def signup(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('home')  # Redirect to homepage after signup
-    else:
-        form = UserCreationForm()
-    return render(request, 'registration/signup.html', {'form': form})
-
-
-from django.shortcuts import render, redirect
-from .forms import UserRegistrationForm
+    Returns:
+        HttpResponse: Rendered template showing concert details.
+    """
+    shows = Concert.objects.all()
+    context = {'concerts': shows}
+    return render(request, 'band/concerts.html', context)
 
 def register(request):
+    """
+    Process user registration using the RegisterForm.
+
+    For GET requests, the function shows the blank registration form.
+    For POST requests, it validates and saves the form, and then redirects
+    the user to the login page.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: Rendered template for registration or redirection on success.
+    """
     if request.method == 'POST':
-        form = UserRegistrationForm(request.POST)
+        form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('login')  # Redirect to login after successful registration
+            return redirect('login')
     else:
-        form = UserRegistrationForm()
-    return render(request, 'band/register.html', {'form': form})
+        form = RegisterForm()
+    context = {'form': form}
+    return render(request, 'band/register.html', context)
