@@ -1,42 +1,70 @@
-# 🎸 Band Site
+# 🎸 Band Site – Django Project
 
-A Django-powered web application that showcases band members and concert events. 
-This project was built as part of a capstone task to demonstrate full-stack development skills including models, 
-views, templates, user authentication, Docker, and documentation using Sphinx.
+This is a portfolio-level Django web application that features authentication, navigation, and dynamic content for a music band site.
 
 ---
 
-## 🚀 Features
-
-- 🎤 View upcoming concerts and band members
-- 📝 User registration and login with a custom form
-- 🔐 Django Admin interface
-- 🐳 Dockerized environment for easy deployment
-- 📚 Auto-generated project documentation (Sphinx)
-
----
-
-## 🛠️ Tech Stack
-
-- Python 3.11
-- Django 4.2
-- HTML, CSS (with static files)
-- Docker
-- Sphinx (for docs)
-
----
-
-## 🧪 Setup & Usage
-
-### ✅ Run Locally (Virtual Environment)
+## 🔧 Local Setup with Virtual Environment
 
 ```bash
-# Create and activate a virtual environment
 python -m venv venv
-.\venv\Scripts\activate
+venv\Scripts\activate       # Windows
+source venv/bin/activate      # macOS/Linux
 
-# Install dependencies
 pip install -r requirements.txt
-
-# Run the server
+cd my-static-site
+python manage.py migrate
+python manage.py createsuperuser
 python manage.py runserver
+```
+
+---
+
+## 🐳 Docker Setup
+
+### Step 1: Build the Docker Image
+
+```bash
+docker build -t bandsite-app .
+```
+
+### Step 2: Run the Docker Container
+
+```bash
+docker run -d -p 8000:8000 bandsite-app
+```
+
+Make sure your `Dockerfile` includes the commands to expose port 8000 and run the Django server.
+
+---
+
+## 🗂️ Project Structure
+
+- `my-static-site/`: Django project directory
+- `requirements.txt`: Python dependencies
+- `Dockerfile`: Instructions to containerize the app
+- `README.md`: You're reading it!
+- `docs/`: (If present) Sphinx documentation for codebase
+
+---
+
+## 📝 Documentation
+
+If you're using Sphinx, navigate to your `docs/` folder and run:
+
+```bash
+sphinx-build -b html . _build/html
+```
+
+Make sure your `conf.py` includes:
+```python
+extensions = ['sphinx.ext.autodoc', 'sphinx.ext.napoleon']
+```
+
+---
+
+## 🚀 Author
+
+Lindokuhle Nqwala  
+🔗 [GitHub Portfolio](https://github.com/Lindokuhle-Nqwala)
+
