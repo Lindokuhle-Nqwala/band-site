@@ -15,8 +15,29 @@ class Concert(models.Model):
     venue = models.CharField(max_length=200)
     description = models.TextField()
 
+
+class BandMember(models.Model):
+    """
+    Represents a member of the band with a name and instrument.
+    """
+    name = models.CharField(max_length=100)
+    instrument = models.CharField(max_length=100)
+
+
     def __str__(self):
         """
         Returns a readable string representation of the concert.
         """
         return f"{self.name} @ {self.venue} on {self.date}"
+
+
+class BandMember(models.Model):
+    """
+    Represents a member of the band with a name and instrument.
+    """
+    name = models.CharField(max_length=100)
+    instrument = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.name} ({self.instrument})"
+

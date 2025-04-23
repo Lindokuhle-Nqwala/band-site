@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from .models import BandMember, Concert
-from .forms import RegisterForm
+from .forms import UserRegistrationForm
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render, redirect
+
 
 def home(request):
     """
@@ -13,6 +16,7 @@ def home(request):
         HttpResponse: Rendered home page.
     """
     return render(request, 'band/home.html')
+
 
 def band_members(request):
     """
@@ -28,6 +32,7 @@ def band_members(request):
     context = {'members': members}
     return render(request, 'band/band_members.html', context)
 
+
 def concerts(request):
     """
     Retrieve and display upcoming concerts.
@@ -41,6 +46,7 @@ def concerts(request):
     shows = Concert.objects.all()
     context = {'concerts': shows}
     return render(request, 'band/concerts.html', context)
+
 
 def register(request):
     """
@@ -57,11 +63,26 @@ def register(request):
         HttpResponse: Rendered template for registration or redirection on success.
     """
     if request.method == 'POST':
-        form = RegisterForm(request.POST)
+        form = UserRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('login')
     else:
-        form = RegisterForm()
+        form = UserRegistrationForm(request.POST)
     context = {'form': form}
     return render(request, 'band/register.html', context)
+
+
+def signup(request):
+    """
+    Handle user registration using Django's built-in UserCreationForm.
+    """
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/signup.html', {'form': form})
+
