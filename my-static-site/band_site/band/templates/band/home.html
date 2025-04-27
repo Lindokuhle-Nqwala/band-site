@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta and title information -->
+    <meta charset="UTF-8">
+
+    <!-- Link to external CSS file from the static folder -->
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+
+    <title>Home</title>
+</head>
+<body>
+    <!-- Main heading -->
+    <h1>Welcome to Our Band's Official Website</h1>
+
+    <!-- Short description of the band -->
+    <p>We are the most awesome band in the world!</p>
+
+    <!-- Link to the concerts page using Django URL template tag -->
+    <a href="{% url 'concerts' %}">Check out our upcoming concerts!</a><br>
+
+    <!-- Link to the band members page using Django URL template tag -->
+    <a href="{% url 'band_members' %}">Meet the Band</a>
+</body>
+</html>
